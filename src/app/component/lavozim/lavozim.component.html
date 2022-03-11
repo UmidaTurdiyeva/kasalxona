@@ -1,0 +1,64 @@
+<p>lavozim works!</p>
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Lavozim</mat-card-title>
+        <mat-card-subtitle>Lavozim bilan ishlash bo'limi</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+ 
+        <div>
+            <form [formGroup]="lavozimForm" (ngSubmit)="save()">
+                <input type="text" formControlName="id" readonly *ngIf="tahrirRejm"> <br> <br>
+                <label for="nom">Nom</label> <br>
+                <input type="text" formControlName="nom"> <br> <br>
+
+                <button mat-raised-button color="primary" type="submit" [disabled]="lavozimForm.invalid || isLoading"> <!--disabled - tugmani hira qiladi toki ma'lumot to'liq bo'lmaguncha--> 
+                    <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
+                    <mat-icon *ngIf="!isLoading">add</mat-icon>
+                    Qo'shish
+                </button>
+                <span></span>
+                <button type="button" mat-raised-button color="primary" (click)="tozalash()">
+                    <mat-icon>cancel</mat-icon>
+                    Отмена
+                </button>
+            </form> 
+        </div>
+
+        <br>
+        <mat-form-field appearance="outline">
+            <mat-label>Filter</mat-label>
+            <input style="border: none;" #inp matInput (input)="loadAll(inp.value)">
+
+            <mat-hint>Lavozim filter</mat-hint>
+        </mat-form-field>
+
+<br>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nom</th>
+                    <th>Amal</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let lavozim of lavozimlar">
+                    <td>{{lavozim.id}}</td>
+                    <td>{{lavozim.nom}}</td>
+                    <td>
+                        <button mat-button (click)="tahrir(lavozim)">
+                            <mat-icon class="mat-18">edit</mat-icon>
+                        </button>
+                        <button mat-button (click)="uchirish(lavozim.id)">
+                            <mat-icon class="mat-18">delete</mat-icon>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </mat-card-content>
+
+</mat-card>

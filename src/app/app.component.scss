@@ -1,0 +1,70 @@
+
+.spacer{  
+  display: inline-block;
+  width: 75%;
+}
+// div>button{
+//   float: right;
+// }
+
+.fixed{
+  position: fixed;
+    z-index: 999;
+    background-color: rgba(255, 255, 255, 0.952);
+    width: 100%;
+    height: 7%;
+    padding-top: 1%;
+}
+
+.jadval-container {
+    width: 11%;
+    height: 100%;
+    // border: 1px solid rgba(0, 0, 0, 0.5);
+  }
+  
+  
+  .jadval-sidenav {
+    padding: 30px;
+  }
+  .link{
+      display: block;
+  }
+  .link:visited{
+    color: rgb(26, 68, 196);
+  }
+  
+  .link:hover{
+    color: red;
+  }
+
+.jadval{
+  // display: flex;
+  width: 100%;
+  height: 90%;
+  margin: 20px;
+  box-sizing: border-box;
+} 
+
+
+.jadval-sidenav-content {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  background-color: rgb(144, 210, 248);
+}
+
+
+.logo{
+  display: inline-block;
+  border-radius: 50%;
+  background-image: url("./imgs/logo.jpeg");
+  width: 30px;
+  height: 29px;
+  background-position: center;
+  background-repeat: no-repeat; 
+  background-size: cover;
+
+}
+
+
+

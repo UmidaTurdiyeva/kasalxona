@@ -1,0 +1,110 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Xona</mat-card-title>
+        <mat-card-subtitle>Xona bilan ishlash bo'limi</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+        <form [formGroup]="xonaForm" (ngSubmit)="save()">
+
+            <mat-form-field *ngIf="tahrirRejm" appearance="outline">
+                <mat-label>Id</mat-label>
+                <input matInput formControlName="id" readonly>
+            </mat-form-field>
+
+            <br>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Nom</mat-label>
+                <input type="text" matInput formControlName="nom">
+            </mat-form-field>
+
+            <br>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Info</mat-label>
+                <textarea matInput formControlName="info"></textarea>
+            </mat-form-field>
+
+
+            <br>
+ 
+            <mat-form-field appearance="outline">
+                <mat-label>Bulim</mat-label>
+                <mat-select formControlName="bulim" placeholder="Bulimni tanlang">
+                    <mat-option [value]="bulim.id" *ngFor="let bulim of bulimlar">{{bulim.nom}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <br>
+ 
+            <mat-form-field appearance="outline">
+                <mat-label>Bino</mat-label>
+                <mat-select formControlName="bino" placeholder="Binoni tanlang">
+                    <mat-option [value]="bino.id" *ngFor="let bino of binolar">{{bino.nom}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+
+            <br>
+
+            <button mat-raised-button color="primary" type="submit" [disabled]="xonaForm.invalid || isLoading">
+                <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
+                <mat-icon *ngIf="!isLoading" class="mat-18">add</mat-icon>
+                Qo'shish
+            </button>
+            <span></span>
+            <button type="button" mat-raised-button color="primary" (click)="tozalash()">
+                <!-- type button demasa butun formani qayta yuklaydi-->
+                <mat-icon>cancel</mat-icon>
+                Отмена
+            </button>
+
+            <br>
+
+
+        </form>
+
+        <br>
+        <mat-form-field appearance="outline">
+            <mat-label>Filter</mat-label>
+            <input style="border: none; width: 100%;" #inp matInput (input)="loadAll(inp.value)">
+
+            <mat-hint>Bino filter</mat-hint>
+        </mat-form-field>
+
+
+        <br>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nom</th>
+                    <th>Info</th>
+                    <th>Bulim</th>
+                    <th>Bino</th>
+                    <th>Amal</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let xona of xonalar">
+                    <td>{{xona.id}}</td>
+                    <td>{{xona.nom}}</td>
+                    <td>{{xona.info}}</td>
+                    <td>{{xona.bulim?.nom}}</td>
+                    <td>{{xona.bino?.nom}}</td> <!-- bino bo'lsa nomini chiqar-->
+                    <td>
+                        <button mat-button (click)="tahrir(xona)">
+                            <mat-icon class="mat-18">edit</mat-icon>
+                        </button>
+                        <button mat-button (click)="uchirish(xona.id)">
+                            <mat-icon class="mat-18">delete</mat-icon>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </mat-card-content>
+
+</mat-card>

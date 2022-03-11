@@ -1,0 +1,15 @@
+table{
+    width: 100%;
+    overflow: auto;
+    border-collapse: collapse;
+    th,td{
+        text-align: center;
+        border: solid 1px #eee;
+    }
+}
+
+
+span{
+    display: inline-block;
+    width: 100px;
+}

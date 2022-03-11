@@ -1,0 +1,23 @@
+table{
+    width: 100%;
+    overflow: auto;
+    border-collapse: collapse;
+    th,td{
+        text-align: center;
+        border: solid 2px gray;
+    }
+}
+
+input{
+    border-radius: 5px;
+    border: solid 2px #eee;
+}
+
+input:hover{
+    border: solid 2px grey;
+}
+
+span{
+    display: inline-block;
+    width: 100px;
+}

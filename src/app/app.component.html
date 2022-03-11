@@ -1,0 +1,64 @@
+<mat-toolbar >
+<div class="fixed">
+  <button type="button" mat-button (click)="drawer.toggle()">
+    <mat-icon>menu</mat-icon>
+    </button>
+  
+    <span> SHIF <div class="logo"> </div>  NUR</span>
+    <div class="spacer"></div>
+  
+    
+    <button mat-icon-button class="example-icon folder-icon" aria-label="Example icon-button with home icon">
+      <mat-icon>folder</mat-icon>
+    </button>
+    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with home icon">
+      <mat-icon>home</mat-icon>
+    </button>
+    <button mat-icon-button class="example-icon " aria-label="Example icon-button with share icon">
+      <mat-icon>share</mat-icon>
+    </button>
+    <!-- <button mat-icon-button class="example-icon globe-icon" aria-label="Example icon-button with share icon">
+      <mat-icon>globe</mat-icon>
+    </button> -->
+</div>
+
+  
+</mat-toolbar>
+
+<div class="jadval-sidenav-content">
+<mat-drawer-container class="jadval-container" autosize>
+  <mat-drawer #drawer class="jadval-sidenav" mode="side">
+    <p>JADVALLAR</p>
+    
+    <a class="link" mat-button [routerLink]="['bemor']">
+      Bemor
+    </a>
+    <a class="link" mat-button [routerLink]="['bino']">
+      Bino
+    </a>
+    <a class="link" mat-button [routerLink]="['bulim']">
+      Bulim
+    </a>
+    <a class="link" mat-button [routerLink]="['lavozim']">
+      Lavozim
+    </a>
+    <a class="link" mat-button [routerLink]="['smena']">
+      Smena
+    </a>
+    <a class="link" mat-button [routerLink]="['xodim']">
+      Xodim
+    </a>
+    <a class="link" mat-button [routerLink]="['xona']">
+      Xona
+    </a>
+  </mat-drawer>
+  </mat-drawer-container>
+
+<div  class="jadval">
+  <router-outlet>
+  </router-outlet>
+</div>
+
+</div>
+
+
