@@ -40,18 +40,20 @@ export class XonaComponent implements OnInit {
     });
 
     this.loadAll('');
-    this.binoService.getAll('').subscribe(data=>{
-      this.binolar = data })
-    this.bulimService.getAll('').subscribe(data=>{
-      this.bulimlar = data })
+    this.binoService.getAll('').subscribe(binoPage=>{
+      this.binolar = binoPage.content;
+     })
+    this.bulimService.getAll('').subscribe(bulimPage=>{
+      this.bulimlar = bulimPage.content;
+     })
   } 
 
   loadAll(key: any){ 
     this.isLoadingResult = true;
     this.isLoadingReached = true;
     this.xonalar = [];
-    this.xonaService.getAll(key).subscribe(xonalar=>{
-      this.xonalar = xonalar;
+    this.xonaService.getAll(key).subscribe(xonaPage=>{
+      this.xonalar = xonaPage.content;
       this.isLoadingResult = false;
       this.isLoadingReached  = true; 
 

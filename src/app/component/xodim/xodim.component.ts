@@ -40,11 +40,11 @@ export class XodimComponent implements OnInit {
 
     })
     this.loadAll('');
-    this.lavozimService.getAll('').subscribe(lavozimlar => {
-      this.lavozimlar = lavozimlar
+    this.lavozimService.getAll('').subscribe(lavozimPage => {
+      this.lavozimlar = lavozimPage.content;
     })
-    this.smenaService.getAll('').subscribe(smenalar => {
-      this.smenalar = smenalar
+    this.smenaService.getAll('').subscribe(smenaPage => {
+      this.smenalar = smenaPage.content;
     })
   }
 
@@ -52,8 +52,8 @@ export class XodimComponent implements OnInit {
     this.isLoadingResult = true;
     this.isLoadingReached = true;
     this.xodimlar = [];
-    this.xodimService.getAll(key).subscribe(xodimlar => {
-      this.xodimlar = xodimlar;
+    this.xodimService.getAll(key).subscribe(xodimPage => {
+      this.xodimlar = xodimPage.content;
       this.isLoadingResult = false;
       this.isLoadingReached  = true;
     },

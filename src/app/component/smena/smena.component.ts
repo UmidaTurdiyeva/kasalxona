@@ -34,8 +34,8 @@ export class SmenaComponent implements OnInit {
     this.isLoadingResult = true;
     this.isLoadingReached = true;
     this.smenalar = [];
-    this.smenaService.getAll(key).subscribe(smenalar => {
-      this.smenalar = smenalar;
+    this.smenaService.getAll(key).subscribe(smenaPage => {
+      this.smenalar = smenaPage.content;
       this.isLoadingResult = false;
       this.isLoadingReached  = true;
     },

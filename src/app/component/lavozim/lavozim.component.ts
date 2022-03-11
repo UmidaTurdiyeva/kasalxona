@@ -35,8 +35,8 @@ export class LavozimComponent implements OnInit {
     this.isLoadingResult = true;
     this.isLoadingReached = true;
     this.lavozimlar = [];
-    this.lavozimService.getAll(key).subscribe(lavozimlar => {
-      this.lavozimlar = lavozimlar;
+    this.lavozimService.getAll(key).subscribe(lavozimPage => {
+      this.lavozimlar = lavozimPage.content;
       this.isLoadingResult = false;
       this.isLoadingReached = true;
     },

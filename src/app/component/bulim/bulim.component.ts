@@ -34,8 +34,8 @@ export class BulimComponent implements OnInit {
     this.isLoadingResult = true;
     this.isLoadingReached = true;
     this.bulimlar = [];
-    this.bulimService.getAll(key).subscribe(bulimlar=>{
-      this.bulimlar= bulimlar;
+    this.bulimService.getAll(key).subscribe(bulimPage=>{
+      this.bulimlar= bulimPage.content;
       this.isLoadingResult = false;
       this.isLoadingReached  = true;
     },

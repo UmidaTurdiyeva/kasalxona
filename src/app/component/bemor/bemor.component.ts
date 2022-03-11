@@ -6,6 +6,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Bemor } from 'src/app/model/bemor';
 import { BemorService } from 'src/app/service/bemor.service';
+import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog.component';
 
 @Component({
   selector: 'app-bemor',
@@ -82,19 +83,13 @@ export class BemorComponent implements OnInit {
         msg: "Rostdan ham o'chiemoqchimisiz?"
       }
     }).afterClosed().subscribe(data =>{
-      this.loadAll('');
-    })
-    this.bemorService.deleteById(id).subscribe(data=>{
-      this.loadAll('');
-    })
-
-    this.bemorService.deleteById(id).subscribe(data =>{
+      
       if(data){
         this.bemorService.deleteById(id).subscribe(data =>{
           this.loadAll('');
         })
       }
-    })
+    });
   }
 
   save(){

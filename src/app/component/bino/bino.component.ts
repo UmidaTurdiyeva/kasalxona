@@ -22,7 +22,7 @@ export class BinoComponent implements OnInit {
   isLoadingResult = false;
   isLoadingReached = false;
   //
-  // displayedColumns = ['id', 'nom', 'info', 'amal']; agar jadvalni dizayinini saytdan olib yozsam shu kod yoziladi qolgani app.html da
+  displayedColumns = ['id', 'nom', 'info', 'amal']; //agar jadvalni dizayinini saytdan olib yozsam shu kod yoziladi qolgani app.html da
   @ViewChild(MatAccordion) accordion!: MatAccordion;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
