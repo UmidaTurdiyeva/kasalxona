@@ -6,6 +6,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Bino } from 'src/app/model/bino';
 import { BinoService } from 'src/app/service/bino.service';
+import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog.component';
+
 
 @Component({
   selector: 'app-bino',
@@ -20,7 +22,7 @@ export class BinoComponent implements OnInit {
   isLoadingResult = false;
   isLoadingReached = false;
   //
-  displayedColumns = ['id', 'nom', 'info', 'amal'];
+  // displayedColumns = ['id', 'nom', 'info', 'amal']; agar jadvalni dizayinini saytdan olib yozsam shu kod yoziladi qolgani app.html da
   @ViewChild(MatAccordion) accordion!: MatAccordion;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -33,17 +35,17 @@ export class BinoComponent implements OnInit {
     //
     private dialog: MatDialog) { }
 
-    ngAfterViewInit(): void{
-      // agar biz boshqa page da turgan bo'lsak saralash bo'lganda boshiga qaytish zarur
-      this.sort.sortChange.subscribe(()=>{
-        this.paginator.pageIndex = 0;
+  ngAfterViewInit(): void {
+    // agar biz boshqa page da turgan bo'lsak saralash bo'lganda boshiga qaytish zarur
+    this.sort.sortChange.subscribe(() => {
+      this.paginator.pageIndex = 0;
       this.loadAll('');
     });
     // paginator o'zgarganda ma'lumotni yuklashimiz kerak
     this.paginator.page.subscribe(() => this.loadAll(''));
     // dastlabki yuklash
     this.loadAll('');
-    }
+  }
 
 
 
@@ -77,29 +79,27 @@ export class BinoComponent implements OnInit {
       this.isLoadingResult = false;
       this.isLoadingReached = true;
     },
-    error=>{
-      this.isLoadingResult = false;
-      this.isLoadingReached = false;
-    }
+      error => {
+        this.isLoadingResult = false;
+        this.isLoadingReached = false;
+      }
     );
   }
 
   uchirish(id: number) {
-this.dialog.open(ConfirmDialogComponent,{
-  data:{
-    title: "o'chirish",
-    msg: "Siz rostdan ham o'chirmoqchimisiz?"
-  }
-}).afterClosed().subscribe(data => {
-  this.loadAll('');
-})
-    this.binoService.deleteById(id).subscribe(data => {
-      if(data){
+    this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: "o'chirish",
+        msg: "Siz rostdan ham o'chirmoqchimisiz?"
+      }
+    }).afterClosed().subscribe(data => {
+
+      if (data) {
         this.binoService.deleteById(id).subscribe(data => {
           this.loadAll('');
         })
       }
-    })
+    });
   }
 
   save() {
