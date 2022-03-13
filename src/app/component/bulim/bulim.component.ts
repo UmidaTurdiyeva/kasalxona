@@ -1,7 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { MatAccordion } from '@angular/material/expansion';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { Bulim } from 'src/app/model/bulim';
 import { BulimService } from 'src/app/service/bulim.service';
+import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog.component';
 
 @Component({
   selector: 'app-bulim',
@@ -15,72 +20,104 @@ export class BulimComponent implements OnInit {
   isLoading = false;
   isLoadingResult = false;
   isLoadingReached = false;
+  // displayedColumns = ['id', 'nom', 'info', 'amal']; //agar jadvalni dizayinini saytdan olib yozsam shu kod yoziladi qolgani app.html da
+  @ViewChild(MatAccordion) accordion!: MatAccordion;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+  totalElements = 0;
 
-  constructor( private bulimService: BulimService, 
-    private fb: FormBuilder)  { }
+
+  constructor(
+    private bulimService: BulimService,
+    private fb: FormBuilder,
+    private dialog: MatDialog) { }
+
+  ngAfterViewInit(): void {
+    this.sort.sortChange.subscribe(() => {
+      this.paginator.pageIndex = 0;
+      this.loadAll('');
+    });
+    this.paginator.page.subscribe(() => this.loadAll(''));
+    this.loadAll('');
+  }
 
   ngOnInit(): void {
     this.bulimForm = this.fb.group({
-      id:[],
+      id: [],
       nom: ['', [Validators.required]],
       info: ['']
-    })
-
+    });
     this.loadAll('');
-    
   }
 
-  loadAll(key: any){
+  loadAll(key: any) {
     this.isLoadingResult = true;
     this.isLoadingReached = true;
     this.bulimlar = [];
-    this.bulimService.getAll(key).subscribe(bulimPage=>{
-      this.bulimlar= bulimPage.content;
-      this.isLoadingResult = false;
-      this.isLoadingReached  = true;
-    },
-    error=>{
-      this.isLoadingResult = false;
-      this.isLoadingReached = false;
+    let params = {
+      key: key,
+      size: this.paginator.pageSize,
+      page: this.paginator.pageIndex,
+      sort: this.sort.active + "," + this.sort.direction
     }
+    this.bulimService.getAll(key).subscribe(bulimPage => {
+      this.bulimlar = bulimPage.content;
+      this.isLoadingResult = false;
+      this.isLoadingReached = true;
+    },
+      error => {
+        this.isLoadingResult = false;
+        this.isLoadingReached = false;
+      }
     )
   }
 
-  uchirish(id: number){
-    if (confirm(`Siz rostdan ham o'chirmoqchimisiz?`))
-    this.bulimService.deleteById(id).subscribe(data=>{
-      this.loadAll('');
-    })
+  uchirish(id: number) {
+    this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: "o'chirish",
+        msg: "Rostdan ham o'chirmoqchimisiz?"
+      }
+    }).afterClosed().subscribe(data => {
+      if (data) {
+        this.bulimService.deleteById(id).subscribe(data => {
+          this.loadAll('');
+        })
+
+      }
+    });
   }
 
-  
-  save(){
+
+  save() {
     let bulim = this.bulimForm.getRawValue();
     this.isLoading = true;
-    if(!this.tahrirRejm){
-      this.bulimService.create(bulim).subscribe(data=>{
+    if (!this.tahrirRejm) {
+      this.bulimService.create(bulim).subscribe(data => {
         this.loadAll('');
         this.tozalash();
       })
-    }else{
-      this.bulimService.update(bulim).subscribe(data=>{
+    } else {
+      this.bulimService.update(bulim).subscribe(data => {
         this.loadAll('');
         this.tozalash();
-      }) 
+      })
     }
-      
+
   }
 
-  
-  tahrir(bulim: Bulim){
+
+  tahrir(bulim: Bulim) {
     this.tahrirRejm = true;
     this.bulimForm.reset(bulim); // reset-qayta yuklash
+    this.accordion.openAll();
   }
 
-  tozalash(){
-    this.bulimForm.reset(); 
+  tozalash() {
+    this.bulimForm.reset();
     this.tahrirRejm = false;
     this.isLoading = false;
+    this.accordion.closeAll();
   }
 
 
