@@ -121,7 +121,7 @@ export class BulimComponent implements OnInit {
   }
 
 
-
+//hammasi bo'ldi
 
 
 }
