@@ -35,7 +35,7 @@ export class BinoComponent implements OnInit {
     //
     private dialog: MatDialog) { }
 
-  ngAfterViewInit(): void {
+  ngAfterViewInit(): void { // 1-2-3 sahifalar ko'rib chiqilgandan keyingi sahifani holati, yani saralash index noldan boshlanishi kerak(sort), sahifa to'liq qayta yuklanishi kerak(loadAll('')) 
     // agar biz boshqa page da turgan bo'lsak saralash bo'lganda boshiga qaytish zarur
     this.sort.sortChange.subscribe(() => {
       this.paginator.pageIndex = 0;
@@ -49,7 +49,7 @@ export class BinoComponent implements OnInit {
 
 
 
-  ngOnInit(): void {
+  ngOnInit(): void { // sahifa birinchi yuklanganda quyidagilar sahifada paydo bo'ladi
     this.binoForm = this.fb.group({
       id: [],
       nom: ['', [Validators.required]],
@@ -61,10 +61,10 @@ export class BinoComponent implements OnInit {
   }
 
 
-  loadAll(key: any) {
-    this.isLoadingResult = true;
-    this.isLoadingReached = true;
-    this.binolar = [];
+  loadAll(key: any) { // sahifadadgi eng katta yulanish
+    this.isLoadingResult = true; // yuklanish natijasi true
+    this.isLoadingReached = true; // yuklanish ohiriga yetdi
+    this.binolar = []; // barcha binolar massiv holatida 
     //
     let params = {
       key: key,
@@ -105,7 +105,6 @@ export class BinoComponent implements OnInit {
   save() {
     this.isLoading = true;
     let bino = this.binoForm.getRawValue();
-    this.isLoading = true;
     if (!this.tahrirRejm) {
       this.binoService.create(bino).subscribe(data => {
         this.loadAll('');
